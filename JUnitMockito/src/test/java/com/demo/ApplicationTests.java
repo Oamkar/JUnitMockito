@@ -4,45 +4,45 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import com.demo.entity.Student;
-import com.demo.repository.StudentRepository;
-import com.demo.service.StudentService;
-import com.demo.service.impl.StudentServiceImpl;
+import com.demo.entity.Purchase;
+import com.demo.repository.PurchaseRepository;
+import com.demo.service.CollectorService;
+import com.demo.service.impl.CollectorServiceImpl;
 
-@ExtendWith(MockitoExtension.class)
-class ApplicationTests {
+@RunWith(MockitoJUnitRunner.class)
+public class ApplicationTests {
 
-	private StudentService studentService;
+	private CollectorService collectorService;
 	
-	@Mock private StudentRepository studentRepository;
+	@Mock private PurchaseRepository purchaseRepository;
 	  
-	@Mock private Student student;
+	@Mock private Purchase purchase;
 	
-	@Mock private Iterable<Student> itrStudents;
+	@Mock private Iterable<Purchase> itrPurchase;
 	
-	@BeforeEach
+	@Before
 	public void onSetUp() {
-		studentService = new StudentServiceImpl(studentRepository);
+		collectorService = new CollectorServiceImpl(purchaseRepository);
 	}
 	
 	@Test
-	public void testGetAllStudents() {
-		when( studentRepository.findAll() ).thenReturn( itrStudents );
-		assertNotNull(studentService.getAllStudents());
-		verify(studentRepository).findAll();
+	public void testPurchaseDetails() {
+		when( purchaseRepository.findAll() ).thenReturn( itrPurchase );
+		assertNotNull(collectorService.getPurchaseDetails());
+		verify(purchaseRepository).findAll();
 	}
 	
 	@Test
 	public void testAddNewEntry() {
-		when( studentRepository.save(student) ).thenReturn(student);
-		assertNotNull(studentService.addNewEntry(student));
-		verify(studentRepository).save(student);
+		when( purchaseRepository.save(purchase) ).thenReturn(purchase);
+		assertNotNull(collectorService.addNewEntry(purchase));
+		verify(purchaseRepository).save(purchase);
 	}
 
 }
